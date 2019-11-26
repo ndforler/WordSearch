@@ -20,10 +20,10 @@ public class WordSearch {
         //checking the rows and columns to see if the program ran properly
         System.out.println(row + " is the number of rows");
         System.out.println(col + " is the number of cols");
-        Board = new char[row][col];
+        Board = new char[col][row];
 
-        fillBoard(row, col);
-        getWords(col);
+        fillBoard(col, row);
+        getWords(row);
     }
 
     /**
@@ -45,13 +45,11 @@ public class WordSearch {
                 }
             }else{//if number is not between the range, the program will rerun
                 System.out.println("The number needs to be in the range of (2-15).");
-                getGrid(section);
             }
         }catch(InputMismatchException e){//checks if the input is acceptable(integers)
             System.out.println("Unable to read input, please try again.");
-            getGrid(section);
         }
-        return 0;
+        return getGrid(section);
     }
 
     /**
@@ -102,6 +100,8 @@ public class WordSearch {
             if(word.length() <= col) {   //checks if word is longer than column
                 words[x] = word.trim().toUpperCase();
                 x++;
+            }else{
+                System.out.println("Please enter a word with " + Board[0].length + " characters.");
             }
         }
         return words;
