@@ -54,6 +54,11 @@ public class WordSearch {
         return 0;
     }
 
+    /**
+     * fills the board with random letters
+     * @param row numbers of rows the user entered
+     * @param col number of columns the user entered
+     */
     public void fillBoard(int row, int col){
         Random num = new Random();
         for(int x = 0; x < row; x++){
@@ -64,6 +69,10 @@ public class WordSearch {
         }
     }
 
+    /**
+     * prints out the table
+     * @return a String which is viewed as a table
+     */
     @Override
     public String toString() {
         String words = "";
@@ -76,16 +85,21 @@ public class WordSearch {
         return words;
     }
 
-    public String[] getWords(int col){
+    /**
+     * gets the words to enter into the table
+     * @param col is the number of columns the user entered
+     * @return the array of words
+     */
+    private String[] getWords(int col){
         Scanner input = new Scanner(System.in);
 
         //Making word String and an array to hold the words typed out
-        String[] words = new String[Board[0].length];
+        String[] words = new String[Board.length];
         String word;
-        for(int x = 0; x < Board[0].length;){
+        for(int x = 0; x < Board.length;){
             System.out.print("Enter a word: ");
             word = input.next();
-            if(word.length() < col) {   //checks if word is longer than column
+            if(word.length() <= col) {   //checks if word is longer than column
                 words[x] = word.trim().toUpperCase();
                 x++;
             }
