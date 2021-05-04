@@ -3,8 +3,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class WordSearch {
-    private char[][] Board;
+    private char[][] board;
 
+    private String[] words;
     /**
      * constructor
      * gets the number of rows and columns
@@ -17,13 +18,13 @@ public class WordSearch {
         row = getGrid("rows");
         col = getGrid("cols");
 
-        //checking the rows and columns to see if the program ran properly
-        System.out.println(row + " is the number of rows");
-        System.out.println(col + " is the number of cols");
-        Board = new char[col][row];
+        board = new char[row][col];
 
-        fillBoard(col, row);
-        getWords(row);
+        words = new String[board.length];
+
+        fillBoard();
+        getWords();
+        makeBoard();
     }
 
     /**
@@ -54,15 +55,13 @@ public class WordSearch {
 
     /**
      * fills the board with random letters
-     * @param row numbers of rows the user entered
-     * @param col number of columns the user entered
      */
-    public void fillBoard(int row, int col){
+    public void fillBoard(){
         Random num = new Random();
-        for(int x = 0; x < row; x++){
-            for(int y = 0; y < col; y++){
+        for(int x = 0; x < board.length; x++){
+            for(int y = 0; y < board[0].length; y++){
                 char letter = (char)(num.nextInt(26)+ 'A');
-                Board[x][y] = letter;
+                board[x][y] = letter;
             }
         }
     }
@@ -74,9 +73,9 @@ public class WordSearch {
     @Override
     public String toString() {
         String words = "";
-        for(int x = 0; x < Board.length; x++){
-            for(int y = 0; y < Board[0].length; y++){
-                words += Board[x][y] + " ";
+        for(int x = 0; x < board.length; x++){
+            for(int y = 0; y < board[0].length; y++){
+                words += board[x][y] + " ";
             }
             words += "\n";
         }
@@ -85,25 +84,32 @@ public class WordSearch {
 
     /**
      * gets the words to enter into the table
-     * @param col is the number of columns the user entered
      * @return the array of words
      */
-    private String[] getWords(int col){
+    private void getWords(){
         Scanner input = new Scanner(System.in);
 
         //Making word String and an array to hold the words typed out
-        String[] words = new String[Board.length];
         String word;
-        for(int x = 0; x < Board.length;){
+        for(int x = 0; x < board.length;){
             System.out.print("Enter a word: ");
             word = input.next();
-            if(word.length() <= col) {   //checks if word is longer than column
+            if(word.length() <= board[0].length) {   //checks if word is longer than column
                 words[x] = word.trim().toUpperCase();
                 x++;
             }else{
-                System.out.println("Please enter a word with " + Board[0].length + " characters.");
+                System.out.println("Please enter a word with " + board[0].length + " characters.");
             }
         }
-        return words;
+    }
+    public void makeBoard(){
+        int range;
+        for(int x = 0; x < board.length; x++) {
+            range = board[0].length - words[x].length();
+            range = (int) (Math.random() * range);
+            for (int y = 0; y < words[x].length(); y++) {
+                board[x][y + range] = words[x].charAt(y);
+            }
+        }
     }
 }
